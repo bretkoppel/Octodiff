@@ -33,7 +33,7 @@ namespace Octodiff.CommandLine
         {
             options.Parse(commandLineArguments);
 
-            if (string.IsNullOrWhiteSpace(basisFilePath))
+            if (Helpers.IsNullOrWhiteSpace(basisFilePath))
                 throw new OptionException("No basis file was specified", "basis-file");
 
             basisFilePath = Path.GetFullPath(basisFilePath);
@@ -46,7 +46,7 @@ namespace Octodiff.CommandLine
                 throw new FileNotFoundException("File not found: " + basisFilePath, basisFilePath);
             }
 
-            if (string.IsNullOrWhiteSpace(signatureFilePath))
+            if (Helpers.IsNullOrWhiteSpace(signatureFilePath))
             {
                 signatureFilePath = basisFilePath + ".octosig";
             }

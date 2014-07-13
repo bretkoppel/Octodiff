@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Octodiff</RootNamespace>
     <AssemblyName>Octodiff</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,8 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLine\DeltaCommand.cs" />
@@ -45,6 +44,7 @@
     <Compile Include="Core\ChunkSignatureChecksumComparer.cs" />
     <Compile Include="Core\CorruptFileFormatException.cs" />
     <Compile Include="Core\HashAlgorithmWrapper.cs" />
+    <Compile Include="Core\Helpers.cs" />
     <Compile Include="Core\IHashAlgorithm.cs" />
     <Compile Include="Core\ISignatureReader.cs" />
     <Compile Include="Core\Signature.cs" />
@@ -78,11 +78,15 @@
     <Compile Include="Core\SignatureBuilder.cs" />
     <Compile Include="Core\SupportedAlgorithms.cs" />
     <Compile Include="Core\UsageException.cs" />
+    <Compile Include="Core\LinqBridge-1.3.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLine\Support\NDesk.Options.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Octodiff.CommandLine.Support;
 using Octodiff.Core;
 using Octodiff.Diagnostics;
@@ -33,12 +34,11 @@ namespace Octodiff.CommandLine
         public int Execute(string[] commandLineArguments)
         {
             options.Parse(commandLineArguments);
-
-            if (string.IsNullOrWhiteSpace(basisFilePath))
+            if (Helpers.IsNullOrWhiteSpace(basisFilePath))
                 throw new OptionException("No basis file was specified", "basis-file");
-            if (string.IsNullOrWhiteSpace(deltaFilePath))
+            if (Helpers.IsNullOrWhiteSpace(deltaFilePath))
                 throw new OptionException("No delta file was specified", "delta-file");
-            if (string.IsNullOrWhiteSpace(newFilePath))
+            if (Helpers.IsNullOrWhiteSpace(newFilePath))
                 throw new OptionException("No new file was specified", "new-file");
 
             basisFilePath = Path.GetFullPath(basisFilePath);

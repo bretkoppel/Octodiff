@@ -28,7 +28,7 @@ namespace Octodiff.CommandLine
         {
             options.Parse(commandLineArguments);
 
-            if (string.IsNullOrWhiteSpace(deltaFilePath))
+            if (Helpers.IsNullOrWhiteSpace(deltaFilePath))
                 throw new OptionException("No delta file was specified", "delta-file");
 
             deltaFilePath = Path.GetFullPath(deltaFilePath);

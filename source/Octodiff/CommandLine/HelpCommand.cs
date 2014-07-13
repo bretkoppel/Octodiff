@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Permissions;
 using Octodiff.CommandLine.Support;
+using Octodiff.Core;
 
 namespace Octodiff.CommandLine
 {
@@ -50,7 +51,7 @@ namespace Octodiff.CommandLine
             Console.ResetColor();
             Console.Write("Usage: ");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(executable + " " + commandName + (!string.IsNullOrWhiteSpace(commandMetadata.Usage) ? " " + commandMetadata.Usage : "") + " [<options>]");
+            Console.WriteLine(executable + " " + commandName + (!Helpers.IsNullOrWhiteSpace(commandMetadata.Usage) ? " " + commandMetadata.Usage : "") + " [<options>]");
             Console.ResetColor();
             Console.WriteLine();
             command.GetHelp(Console.Out);

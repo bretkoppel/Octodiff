@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
 using System.IO;
-using System.Security.Policy;
+using System.LinqBridge;
 using Octodiff.Diagnostics;
 
 namespace Octodiff.Core
@@ -46,7 +45,7 @@ namespace Octodiff.Core
             reader.BaseStream.Seek(0, SeekOrigin.Begin);
 
             var first = reader.ReadBytes(BinaryFormat.DeltaHeader.Length);
-            if (!StructuralComparisons.StructuralEqualityComparer.Equals(first, BinaryFormat.DeltaHeader))
+            if (!Helpers.ArraysEqual(first, BinaryFormat.DeltaHeader))
                 throw new CorruptFileFormatException("The delta file appears to be corrupt.");
 
             var version = reader.ReadByte();
@@ -59,7 +58,7 @@ namespace Octodiff.Core
             var hashLength = reader.ReadInt32();
             expectedHash = reader.ReadBytes(hashLength);
             var endOfMeta = reader.ReadBytes(BinaryFormat.EndOfMetadata.Length);
-            if (!StructuralComparisons.StructuralEqualityComparer.Equals(BinaryFormat.EndOfMetadata, endOfMeta))
+            if (!Helpers.ArraysEqual(BinaryFormat.EndOfMetadata, endOfMeta))
                 throw new CorruptFileFormatException("The signature file appears to be corrupt.");
 
             hasReadMetadata = true;

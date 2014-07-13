@@ -523,7 +523,7 @@ namespace Octodiff.CommandLine
 
     class OptionSet : KeyedCollection<string, Option>
     {
-        readonly List<Tuple<string, string, Action<string>>> positionalParameters = new List<Tuple<string, string, Action<string>>>(); 
+        readonly List<PositionalParameter> positionalParameters = new List<PositionalParameter>(); 
 
         public OptionSet()
             : this(delegate(string f) { return f; })
@@ -622,7 +622,7 @@ namespace Octodiff.CommandLine
 
         public void Positional(string name, string description, Action<string> valueCallback)
         {
-            positionalParameters.Add(Tuple.Create(name, description, valueCallback));
+            positionalParameters.Add(new PositionalParameter(name, description, valueCallback));
         }
 
         sealed class ActionOption : Option
@@ -711,6 +711,20 @@ namespace Octodiff.CommandLine
             }
         }
 
+        sealed class PositionalParameter
+        {
+            public PositionalParameter(string name, string description, Action<string> valueCallback)
+            {
+                this.Name = name;
+                this.Description = description;
+                this.ValueCallback = valueCallback;
+            }
+
+            public string Name { get; private set; }
+            public string Description { get; private set; }
+            public Action<string> ValueCallback { get; private set; }
+        }
+
         public OptionSet Add<T>(string prototype, Action<T> action)
         {
             return Add(prototype, null, action);
@@ -795,7 +809,7 @@ namespace Octodiff.CommandLine
             {
                 if (i < unprocessed.Count)
                 {
-                    positionalParameters[i].Item3(unprocessed[i]);
+                    positionalParameters[i].ValueCallback(unprocessed[i]);
                 }
             }
 
@@ -970,7 +984,7 @@ namespace Octodiff.CommandLine
 
         public List<string> GetPositionals()
         {
-            return positionalParameters.Select(s => s.Item1).ToList();
+            return positionalParameters.Select(s => s.Name).ToList();
         } 
 
         public void WriteOptionDescriptions(TextWriter o)
@@ -983,7 +997,7 @@ namespace Octodiff.CommandLine
 
             foreach (var positional in positionalParameters)
             {
-                var prototype = "      " + positional.Item1;
+                var prototype = "      " + positional.Name;
                 o.Write(prototype);
                 var written = prototype.Length;
                 if (written < OptionWidth)
@@ -996,7 +1010,7 @@ namespace Octodiff.CommandLine
 
                 bool indent = false;
                 string prefix = new string(' ', OptionWidth);
-                foreach (string line in GetLines(positional.Item2))
+                foreach (string line in GetLines(positional.Description))
                 {
                     if (indent)
                         o.Write(prefix);

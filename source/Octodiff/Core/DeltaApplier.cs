@@ -41,7 +41,7 @@ namespace Octodiff.Core
 
                 var actualHash = algorithm.ComputeHash(outputStream);
 
-                if (!StructuralComparisons.StructuralEqualityComparer.Equals(sourceFileHash, actualHash))
+                if (!Helpers.ArraysEqual(sourceFileHash, actualHash))
                     throw new UsageException("Verification of the patched file failed. The SHA1 hash of the patch result file, and the file that was used as input for the delta, do not match. This can happen if the basis file changed since the signatures were calculated.");
             }
         }

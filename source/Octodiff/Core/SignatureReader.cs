@@ -22,8 +22,8 @@ namespace Octodiff.Core
         {
             Progress();
             var header = reader.ReadBytes(BinaryFormat.SignatureHeader.Length);
-            if (!StructuralComparisons.StructuralEqualityComparer.Equals(BinaryFormat.SignatureHeader, header)) 
-                throw new CorruptFileFormatException("The signature file appears to be corrupt.");
+            if (!Helpers.ArraysEqual(header, BinaryFormat.SignatureHeader))
+                    throw new CorruptFileFormatException("The signature file appears to be corrupt.");
 
             var version = reader.ReadByte();
             if (version != BinaryFormat.Version)
@@ -33,7 +33,7 @@ namespace Octodiff.Core
             var rollingChecksumAlgorithm = reader.ReadString();
 
             var endOfMeta = reader.ReadBytes(BinaryFormat.EndOfMetadata.Length);
-            if (!StructuralComparisons.StructuralEqualityComparer.Equals(BinaryFormat.EndOfMetadata, endOfMeta)) 
+            if (!Helpers.ArraysEqual(endOfMeta, BinaryFormat.EndOfMetadata))
                 throw new CorruptFileFormatException("The signature file appears to be corrupt.");
 
             Progress();

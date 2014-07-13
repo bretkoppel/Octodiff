@@ -89,7 +89,7 @@ namespace Octodiff.Core
 
                         var sha = signature.HashAlgorithm.ComputeHash(buffer, i, remainingPossibleChunkSize);
 
-                        if (StructuralComparisons.StructuralEqualityComparer.Equals(sha, chunks[j].Hash))
+                        if (Helpers.ArraysEqual(sha, chunks[j].Hash))
                         {
                             readSoFar = readSoFar + remainingPossibleChunkSize;
 

@@ -34,9 +34,9 @@ namespace Octodiff.CommandLine
         {
             options.Parse(commandLineArguments);
 
-            if (string.IsNullOrWhiteSpace(signatureFilePath))
+            if (Helpers.IsNullOrWhiteSpace(signatureFilePath))
                 throw new OptionException("No signature file was specified", "new-file");
-            if (string.IsNullOrWhiteSpace(newFilePath))
+            if (Helpers.IsNullOrWhiteSpace(newFilePath))
                 throw new OptionException("No new file was specified", "new-file");
 
             newFilePath = Path.GetFullPath(newFilePath);
@@ -55,7 +55,7 @@ namespace Octodiff.CommandLine
                 throw new FileNotFoundException("File not found: " + newFilePath, newFilePath);
             }
 
-            if (string.IsNullOrWhiteSpace(deltaFilePath))
+            if (Helpers.IsNullOrWhiteSpace(deltaFilePath))
             {
                 deltaFilePath = newFilePath + ".octodelta";
             }

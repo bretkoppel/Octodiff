@@ -1,4 +1,5 @@
 using System;
+using System.LinqBridge;
 
 namespace Octodiff.Core
 {
